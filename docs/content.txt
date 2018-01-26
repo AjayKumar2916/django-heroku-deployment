@@ -179,4 +179,6 @@ Referecne:
 https://devcenter.heroku.com/articles/heroku-cli
 https://devcenter.heroku.com/articles/django-app-configuration
 
+
+Django Heroku Deployment
 https://blog.merakiinfotech.com/8246b7ef69/django-heroku-deployment/
