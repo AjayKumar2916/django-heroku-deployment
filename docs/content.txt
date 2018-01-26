@@ -4,15 +4,16 @@ $ wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 Create a Heroku account https://signup.heroku.com/login and login into the heroku in your system with your heroku credentails
 
-$ heroku login 
+$ heroku login
+Enter your Heroku credentials:
+Email: 
 
-
-Now we will create a basic django application.
+Now we will create a basic Django application.
 
 Create a project directory
 $ mkdir django-heroku-deployment
 
-Change to the project directory
+Change into the project directory
 $ cd django-heroku-deployment
 
 Create a Virtual Environment
@@ -25,13 +26,14 @@ $ source venv/bin/activate
 Intstall Django
 $ pip install django==1.11.8
 
-Check whether the Django is istalled
+Check whether the Django is istalled properly.
 $ pip freeze
 Django==1.11.8
 pytz==2017.3
 
 Now create a django project
 $ django-admin startproject djangowebsite .
+The dot ('.') in the end of the line is required, in order to create the project files in the root itself, instead of creating again a directory.
 
 And create the database and superuser
 $ python manage.py makemigrations
@@ -49,7 +51,7 @@ Django version 1.11.8, using settings 'djangowebsite.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 
-We need to install some dependencies
+Now we need to install some dependencies
 
 gunicorn - Gunicorn ‘Green Unicorn’ is a Python WSGI HTTP Server for UNIX
 psycopg2 - PostgreSQL database adapter for the Python programming language
@@ -109,7 +111,7 @@ venv
 *.pyc
 db.sqlite3
 
-Now Heroku supports only python3, not python2. In order to make it work we need to define runtime python version, for that create a file called runtime.txt and this line 
+Now Heroku supports python3 only , not python2. In order to make it work we need to define runtime python version, for that create a file called runtime.txt and this line 
 
 $ touch runtime.txt
 
