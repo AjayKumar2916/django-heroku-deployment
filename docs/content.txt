@@ -1,0 +1,153 @@
+Install Heroku in your system Debian/Ubuntu (For other operating system please refer the reference link given below)
+
+$ wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
+Create a Heroku account https://signup.heroku.com/login and login into the heroku in your system with your heroku credentails
+
+$ heroku login 
+
+
+Now we will create a basic django application.
+
+Create a project directory
+$ mkdir django-heroku-deployment
+
+Change to the project directory
+$ cd django-heroku-deployment
+
+Create a Virtual Environment
+$ virtualenv venv
+
+Activate the Virtual Environment
+$ source venv/bin/activate
+
+
+Intstall Django
+$ pip install django==1.11.8
+
+Check whether the Django is istalled
+$ pip freeze
+Django==1.11.8
+pytz==2017.3
+
+Now create a django project
+$ django-admin startproject djangowebsite .
+
+And do the makemigrations, migrate and createsuperuser
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py createsuperuser
+
+
+And run the sever and make sure the application is working properly
+
+$ python manage.py runserver
+Performing system checks...
+
+System check identified no issues (0 silenced).
+Django version 1.11.8, using settings 'djangowebsite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+We need to install some dependencies
+
+gunicorn - Gunicorn ‘Green Unicorn’ is a Python WSGI HTTP Server for UNIX
+psycopg2 - PostgreSQL database adapter for the Python programming language
+dj-database-url - Parses the DATABASE_URL environment variable and converts it to Django’s desired configuration format, automatically.
+whitenoise - serving static files in production
+
+pip install gunicorn psycopg2 dj-database-url whitenoise
+
+Add static files path in settings.py
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+Add the database configuration in settings.py
+
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+Add Whitenoise configuration in settings.py
+
+MIDDLEWARE_CLASSES = [
+   	...
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+]
+
+if you’d like gzip functionality enabled, also add the following setting to settings.py
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+Create a static directory and as for now create a empty file 'static.txt' in it.
+$ mkdir static
+$ touch static/static.txt
+
+Heroku web applications require a Procfile.
+
+Procfile is used to explicitly declare your application’s process types and entry points. It is located in the root of your repository
+
+
+$ touch Procfile
+
+Procfile
+web: gunicorn djangowebsite.wsgi --log-file -
+
+Now we need to allow this application to access the HTTP_HOST, so modify the ALLOWED_HOSTS in the settings.py
+
+ALLOWED_HOSTS = ['*']
+
+Create .gitignore file to ingore the unwanted files
+
+$ touch .gitignore
+
+Add these items to .gitignore
+
+venv
+*.pyc
+db.sqlite3
+
+Now Heroku supports only python3, not python2. In order to make it work we need to define runtime python version, for that create a file called runtime.txt and this line 
+
+$ touch runtime.txt
+
+runtime.txt
+
+python-2.7.14
+
+
+Finally the folder structure looks like this and it is ready for the deployment
+
+.
+├── djangowebsite
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+├── manage.py
+├── Procfile
+├── runtime.txt
+└── static
+    └── static.txt
+
+Now login https://dashboard.heroku.com/apps in to the Heroku dashbaord and new app called 'djangowebsite'.
+
+
+Now initialize the project directoy with git and add the Heroku remote url
+
+$ git init
+$ heroku git:remote -a djangowebsite
+
+And check the added remote
+
+
+
+
+Referecne
+https://devcenter.heroku.com/articles/heroku-cli
+https://devcenter.heroku.com/articles/django-app-configuration
+
+
+
