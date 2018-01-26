@@ -117,6 +117,10 @@ runtime.txt
 
 python-2.7.14
 
+Now add all the installed packages to the requirements.txt file
+
+$ pip freeze > requirements.txt
+
 
 Finally the folder structure looks like this and it is ready for the deployment
 
@@ -129,6 +133,7 @@ Finally the folder structure looks like this and it is ready for the deployment
 ├── manage.py
 ├── Procfile
 ├── runtime.txt
+├── requirements.txt
 └── static
     └── static.txt
 
@@ -141,6 +146,20 @@ $ git init
 $ heroku git:remote -a djangowebsite
 
 And check the added remote
+
+$ git remote -v
+heroku	https://git.heroku.com/djangowebsite.git (fetch)
+heroku	https://git.heroku.com/djangowebsite.git (push)
+
+Now the the code to this remote by using general git commands
+
+$ git status
+$ git add --all
+$ git commit -am "Added django website"
+$ git push heroku master
+
+
+
 
 
 
