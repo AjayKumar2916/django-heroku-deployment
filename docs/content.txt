@@ -124,7 +124,7 @@ Now add all the installed packages to the requirements.txt file
 $ pip freeze > requirements.txt
 
 
-Finally the folder structure looks like this and it is ready for the deployment
+Finally the folder structure will look like this and it is ready for the deployment.
 
 .
 ├── djangowebsite
@@ -178,3 +178,5 @@ That's it and now we deployed the Django application into Heroku and I hope you 
 Referecne:
 https://devcenter.heroku.com/articles/heroku-cli
 https://devcenter.heroku.com/articles/django-app-configuration
+
+https://blog.merakiinfotech.com/8246b7ef69/django-heroku-deployment/
