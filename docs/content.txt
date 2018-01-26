@@ -33,7 +33,7 @@ pytz==2017.3
 Now create a django project
 $ django-admin startproject djangowebsite .
 
-And do the makemigrations, migrate and createsuperuser
+And create the database and superuser
 $ python manage.py makemigrations
 $ python manage.py migrate
 $ python manage.py createsuperuser
@@ -151,22 +151,28 @@ $ git remote -v
 heroku	https://git.heroku.com/djangowebsite.git (fetch)
 heroku	https://git.heroku.com/djangowebsite.git (push)
 
-Now the the code to this remote by using general git commands
+Now push the code to this remote by using general git commands
 
 $ git status
 $ git add --all
 $ git commit -am "Added django website"
 $ git push heroku master
 
+Now you can acceess this application via https://djangowebsite.herokuapp.com/, but the database is not created, to create the database run
+
+$ heroku run bash --app djangowebsite
+Running bash on ⬢ djangowebsite... up, run.2532 (Free)
+~ $
 
 
+It will take you to the heroku console where your application is pushed, now you can create the database.
 
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py createsuperuser
 
+That's it and now we deployed the Django application into Heroku and I hope you enjoyed this article, if you face any issues or problem, please feel free to give your feedbacks in the comment secton. You will find the source code here. 
 
-
-Referecne
+Referecne:
 https://devcenter.heroku.com/articles/heroku-cli
 https://devcenter.heroku.com/articles/django-app-configuration
-
-
-
